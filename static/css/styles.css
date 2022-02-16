@@ -1,0 +1,60 @@
+body {
+  font-family: Montserrat;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat-Bold";
+}
+
+hr {
+  margin: 20px auto 20px auto;
+}
+
+
+p {
+  color: #8f8f8f;
+}
+
+/* headings */
+
+.site-heading {
+  font-family: "Ubuntu";
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+/* container */
+.container-header {
+  background-color: #4ad4ad;
+}
+
+.container {
+  padding: 50px 0 50px 0;
+  width: 95%;
+}
+
+/* images */
+.image {
+  height: 350px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* links */
+a:link {
+  text-decoration: none;
+  color: #8f8f8f;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #8f8f8f;
+}
+
+a:hover {
+  color: #ff4c68;
+}
+
