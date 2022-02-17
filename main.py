@@ -37,24 +37,29 @@ def home():
 @app.route("/get_stock", methods=['GET'])
 def get_stock():
     company_symbol = request.args.get('company_id')
+    # company data search api
+    final_url = f"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={company_symbol}&apikey={API_KEY}"
+    response_1 = requests.get(url=final_url)
+    searched_company = response_1.json()["bestMatches"][0]
+    # daily time series api
     response = requests.get(url=f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company_symbol}&apikey={API_KEY}")
     data = response.json()["Time Series (Daily)"]
     df_prices = pd.DataFrame.from_dict(data)
     df_days = pd.DataFrame.transpose(df_prices)
+    # monthly time series api
     response_2 = requests.get(
         url=f"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={company_symbol}&apikey={API_KEY}")
     data_2 = response_2.json()["Monthly Time Series"]
     df_prices_2 = pd.DataFrame.from_dict(data_2)
     df_months = pd.DataFrame.transpose(df_prices_2)
     df_months['4. close'] = pd.to_numeric(df_months['4. close'])
-    fig = px.bar(x=df_months.index[:12],  # index = category name
-                 y=df_months['4. close'][:12],
-                 labels={'y':'Price', 'x':'Month'},
-                 text_auto='.2s',
-                 title=f"{company_symbol} Monthly stock price trend")
-    fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+    fig = px.line(x=df_months.index[:24],
+                  y=df_months['4. close'][:24],
+                  title=f"{company_symbol} Monthly stock price trend",
+                  labels={'y': 'Price', 'x': 'Month'},
+                  markers=True)
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return render_template('stock.html', df_days=df_days, graphJSON=graphJSON)
+    return render_template('stock.html', df_days=df_days, graphJSON=graphJSON, company=searched_company)
 
 
 if __name__ == '__main__':
