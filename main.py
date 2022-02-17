@@ -37,16 +37,13 @@ def home():
 @app.route("/get_stock", methods=['GET'])
 def get_stock():
     company_symbol = request.args.get('company_id')
-    # company data search api
     final_url = f"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={company_symbol}&apikey={API_KEY}"
     response_1 = requests.get(url=final_url)
     searched_company = response_1.json()["bestMatches"][0]
-    # daily time series api
     response = requests.get(url=f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company_symbol}&apikey={API_KEY}")
     data = response.json()["Time Series (Daily)"]
     df_prices = pd.DataFrame.from_dict(data)
     df_days = pd.DataFrame.transpose(df_prices)
-    # monthly time series api
     response_2 = requests.get(
         url=f"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={company_symbol}&apikey={API_KEY}")
     data_2 = response_2.json()["Monthly Time Series"]
