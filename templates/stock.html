@@ -35,6 +35,8 @@
             <tr>
               <th scope="col">Date</th>
               <th scope="col">Open Price</th>
+              <th scope="col">Highest Price</th>
+              <th scope="col">Lowest Price</th>
               <th scope="col">Close Price</th>
             </tr>
           </thead>
@@ -43,6 +45,8 @@
             <tr>
               <td>{{ind}}</td>
               <td>{{df_days['1. open'][ind]}}</td>
+              <td>{{df_days['2. high'][ind]}}</td>
+              <td>{{df_days['3. low'][ind]}}</td>
               <td>{{df_days['4. close'][ind]}}</td>
             </tr>
             {% endfor %}
