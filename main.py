@@ -40,7 +40,7 @@ def get_stock():
     final_url = f"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={company_symbol}&apikey={API_KEY}"
     response_1 = requests.get(url=final_url)
     searched_company = response_1.json()["bestMatches"][0]
-    response = requests.get(url=f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company_symbol}&apikey={API_KEY}")
+    response = requests.get(url=f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={company_symbol}&apikey={API_KEY}")
     data = response.json()["Time Series (Daily)"]
     df_prices = pd.DataFrame.from_dict(data)
     df_days = pd.DataFrame.transpose(df_prices)
